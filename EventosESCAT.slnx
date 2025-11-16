@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="APIRegistro/APIRegistro.csproj" />
+  <Project Path="AppRegistro/AppRegistro.csproj">
+    <Deploy />
+  </Project>
+</Solution>

@@ -1,0 +1,247 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
+             x:Class="AppRegistro.MainPage"
+             Title="Registro de Asistencia"
+             BackgroundColor="White">
+
+    <Grid>
+        <!-- Fondo sutil -->
+        <BoxView BackgroundColor="{StaticResource Secondary}" 
+                 Opacity="0.2" />
+        
+        <ScrollView>
+            <VerticalStackLayout Padding="20" Spacing="20">
+
+                <!-- Encabezado -->
+                <Frame
+                    BackgroundColor="{StaticResource Primary}"
+                    CornerRadius="15"
+                    Padding="20"
+                    HasShadow="True"
+                    Margin="0,0,0,10">
+                    <VerticalStackLayout Spacing="5">
+                        <Label
+                            Text="ESCAT UNINTER"
+                            FontSize="24"
+                            FontAttributes="Bold"
+                            TextColor="White"
+                            HorizontalOptions="Center" />
+                        <Label
+                            Text="Sistema de Registro de Asistencia"
+                            FontSize="14"
+                            TextColor="White"
+                            Opacity="0.9"
+                            HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Campo de búsqueda -->
+                <Frame
+                    CornerRadius="12"
+                    Padding="0"
+                    BackgroundColor="White"
+                    BorderColor="{StaticResource Primary}"
+                    HasShadow="True">
+                    <Entry
+                        x:Name="IdEntry"
+                        Placeholder="Ingresa el Identificador del alumno"
+                        Keyboard="Numeric"
+                        BackgroundColor="{StaticResource Secondary}"
+                        TextColor="{StaticResource Gray900}"
+                        PlaceholderColor="{StaticResource Gray500}"
+                        FontSize="16"
+                        HeightRequest="55"
+                        Margin="15,0" />
+                </Frame>
+
+                <!-- Botones de acción -->
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="15">
+                    <Button
+                        Text="🔍 Buscar"
+                        FontSize="16"
+                        FontAttributes="Bold"
+                        BackgroundColor="{StaticResource Primary}"
+                        TextColor="White"
+                        HeightRequest="50"
+                        CornerRadius="10"
+                        Clicked="Button_Clicked" />
+                    
+                    <Button
+                        x:Name="scanButton"
+                        Text="📷 QR"
+                        FontSize="16"
+                        FontAttributes="Bold"
+                        BackgroundColor="{StaticResource AccentBlue}"
+                        TextColor="White"
+                        HeightRequest="50"
+                        CornerRadius="10"
+                        Clicked="scanButton_Clicked"
+                        Grid.Column="1" />
+                </Grid>
+
+                <!-- Resultados de búsqueda -->
+                <Frame
+                    BackgroundColor="White"
+                    BorderColor="{StaticResource Primary}"
+                    CornerRadius="15"
+                    Padding="20"
+                    HasShadow="True"
+                    Margin="0,10,0,0">
+
+                    <VerticalStackLayout Spacing="15">
+                        <Label
+                            Text="Información del Alumno"
+                            FontSize="20"
+                            FontAttributes="Bold"
+                            TextColor="{StaticResource Primary}"
+                            Margin="0,0,0,5" />
+
+                        <!-- Información del alumno -->
+                        <Frame
+                            BackgroundColor="{StaticResource Secondary}"
+                            CornerRadius="10"
+                            Padding="15"
+                            HasShadow="False">
+                            <VerticalStackLayout Spacing="12">
+                                <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto" RowSpacing="10">
+                                    <Label
+                                        Text="ID Alumno:"
+                                        FontSize="15"
+                                        FontAttributes="Bold"
+                                        TextColor="{StaticResource Primary}"
+                                        Grid.Row="0"
+                                        Grid.Column="0" />
+                                    <Label
+                                        x:Name="IDAlumnoLabel"
+                                        FontSize="15"
+                                        TextColor="{StaticResource Gray900}"
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        Margin="10,0,0,0" />
+
+                                    <Label
+                                        Text="Identificador:"
+                                        FontSize="15"
+                                        FontAttributes="Bold"
+                                        TextColor="{StaticResource Primary}"
+                                        Grid.Row="1"
+                                        Grid.Column="0" />
+                                    <Label
+                                        x:Name="IdentificadorLabel"
+                                        FontSize="15"
+                                        TextColor="{StaticResource Gray900}"
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        Margin="10,0,0,0" />
+
+                                    <Label
+                                        Text="Nombre:"
+                                        FontSize="15"
+                                        FontAttributes="Bold"
+                                        TextColor="{StaticResource Primary}"
+                                        Grid.Row="2"
+                                        Grid.Column="0" />
+                                    <Label
+                                        x:Name="NombreLabel"
+                                        FontSize="15"
+                                        TextColor="{StaticResource Gray900}"
+                                        Grid.Row="2"
+                                        Grid.Column="1"
+                                        Margin="10,0,0,0" />
+
+                                    <Label
+                                        Text="Apellidos:"
+                                        FontSize="15"
+                                        FontAttributes="Bold"
+                                        TextColor="{StaticResource Primary}"
+                                        Grid.Row="3"
+                                        Grid.Column="0" />
+                                    <Label
+                                        x:Name="ApellidosLabel"
+                                        FontSize="15"
+                                        TextColor="{StaticResource Gray900}"
+                                        Grid.Row="3"
+                                        Grid.Column="1"
+                                        Margin="10,0,0,0" />
+
+                                    <Label
+                                        Text="Modalidad:"
+                                        FontSize="15"
+                                        FontAttributes="Bold"
+                                        TextColor="{StaticResource Primary}"
+                                        Grid.Row="4"
+                                        Grid.Column="0" />
+                                    <Label
+                                        x:Name="ModalidadLabel"
+                                        FontSize="15"
+                                        TextColor="{StaticResource Gray900}"
+                                        Grid.Row="4"
+                                        Grid.Column="1"
+                                        Margin="10,0,0,0" />
+                                </Grid>
+                            </VerticalStackLayout>
+                        </Frame>
+
+                        <!-- Asistencias -->
+                        <Frame
+                            BackgroundColor="{StaticResource Secondary}"
+                            CornerRadius="10"
+                            Padding="15"
+                            HasShadow="False">
+                            <VerticalStackLayout Spacing="12">
+                                <Label
+                                    Text="Registro de Asistencia"
+                                    FontSize="16"
+                                    FontAttributes="Bold"
+                                    TextColor="{StaticResource Primary}"
+                                    Margin="0,0,0,5" />
+
+                                <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                                    <CheckBox x:Name="CheckBoxM" IsChecked="{Binding IsCheckM}" />
+                                    <Label
+                                        Text="Asistencia Miércoles"
+                                        VerticalOptions="Center"
+                                        FontSize="15"
+                                        TextColor="{StaticResource Gray900}" />
+                                </HorizontalStackLayout>
+
+                                <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                                    <CheckBox x:Name="CheckBoxJ" IsChecked="{Binding IsCheckJ}" />
+                                    <Label
+                                        Text="Asistencia Jueves"
+                                        VerticalOptions="Center"
+                                        FontSize="15"
+                                        TextColor="{StaticResource Gray900}" />
+                                </HorizontalStackLayout>
+
+                                <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                                    <CheckBox x:Name="CheckBoxConf" IsChecked="{Binding IsCheckConf}" />
+                                    <Label
+                                        Text="Asistencia Conferencia"
+                                        VerticalOptions="Center"
+                                        FontSize="15"
+                                        TextColor="{StaticResource Gray900}" />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </Frame>
+
+                        <!-- Botón de actualizar -->
+                        <Button
+                            x:Name="updButton"
+                            Text="✓ Guardar Asistencia"
+                            FontSize="17"
+                            FontAttributes="Bold"
+                            BackgroundColor="{StaticResource Primary}"
+                            TextColor="White"
+                            HeightRequest="55"
+                            CornerRadius="12"
+                            HorizontalOptions="FillAndExpand"
+                            Clicked="updButton_Clicked" />
+                    </VerticalStackLayout>
+                </Frame>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

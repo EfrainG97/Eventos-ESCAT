@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ?? IMPORTANTE: Este es un archivo de EJEMPLO
+  
+  Este archivo muestra cómo configurar web.config para IIS.
+  NO subir este archivo al repositorio con contraseñas reales.
+  
+  Pasos para usar este archivo:
+  1. Copia este archivo a la carpeta publicada en IIS
+  2. Renómbralo a "web.config" (quita el .example)
+  3. Reemplaza todos los valores de EJEMPLO con valores reales
+  4. Asegúrate de que esté en el .gitignore
+-->
+<configuration>
+  <location path="." inheritInChildApplications="false">
+    <system.webServer>
+      <handlers>
+        <add name="aspNetCore" path="*" verb="*" modules="AspNetCoreModuleV2" resourceType="Unspecified" />
+      </handlers>
+      
+      <aspNetCore processPath="dotnet" 
+                  arguments=".\APIRegistro.dll" 
+                  stdoutLogEnabled="true" 
+                  stdoutLogFile=".\logs\stdout" 
+                  hostingModel="inprocess">
+        
+        <environmentVariables>
+          
+          <!-- CADENA DE CONEXIÓN A SQL SERVER -->
+          <!-- Reemplaza TU_SERVIDOR_SQL, TU_CONTRASEÑA con valores reales -->
+          <environmentVariable name="ConnectionStrings__DefaultConnection" 
+                               value="Server=TU_SERVIDOR_SQL;Database=EventosESCAT;User Id=EventosESCATUser;Password=TU_CONTRASEÑA;TrustServerCertificate=True;Encrypt=True;" />
+          
+          <!-- JWT SECRET KEY -->
+          <!-- Genera una clave aleatoria de al menos 64 caracteres -->
+          <!-- PowerShell: -join ((65..90) + (97..122) + (48..57) | Get-Random -Count 64 | ForEach-Object {[char]$_}) -->
+          <environmentVariable name="JWT__SecretKey" 
+                               value="GENERA_UNA_CLAVE_ALEATORIA_DE_AL_MENOS_64_CARACTERES_AQUI" />
+          
+          <!-- ISSUER Y AUDIENCE DE JWT (opcional, usa valores por defecto si no se especifican) -->
+          <environmentVariable name="JWT__Issuer" 
+                               value="APIRegistro" />
+          <environmentVariable name="JWT__Audience" 
+                               value="APIRegistroUsers" />
+          <environmentVariable name="JWT__ExpirationHours" 
+                               value="24" />
+          
+          <!-- ENTORNO DE EJECUCIÓN -->
+          <!-- Production: Sin Swagger, sin mensajes de error detallados -->
+          <!-- Development: Con Swagger, mensajes de error detallados -->
+          <environmentVariable name="ASPNETCORE_ENVIRONMENT" 
+                               value="Production" />
+          
+          <!-- CORS - Orígenes permitidos (opcional) -->
+          <!-- Separar múltiples orígenes con comas -->
+          <environmentVariable name="AllowedOrigins" 
+                               value="https://tu-dominio.com,https://www.tu-dominio.com" />
+          
+          <!-- ALLOWED HOSTS (opcional) -->
+          <environmentVariable name="AllowedHosts" 
+                               value="*" />
+          
+        </environmentVariables>
+      </aspNetCore>
+      
+      <!-- HTTPS Redirect (opcional, descomenta si no usas URL Rewrite) -->
+      <!--
+      <rewrite>
+        <rules>
+          <rule name="HTTPS Redirect" stopProcessing="true">
+            <match url="(.*)" />
+            <conditions>
+              <add input="{HTTPS}" pattern="^OFF$" />
+            </conditions>
+            <action type="Redirect" url="https://{HTTP_HOST}/{R:1}" redirectType="Permanent" />
+          </rule>
+        </rules>
+      </rewrite>
+      -->
+      
+    </system.webServer>
+  </location>
+</configuration>
+
+<!--
+  NOTAS DE SEGURIDAD:
+  
+  1. ?? NUNCA subir este archivo al repositorio con valores reales
+  2. ?? Proteger este archivo con permisos adecuados en el servidor
+  3. ? Usar contraseñas fuertes (mínimo 12 caracteres, mayúsculas, minúsculas, números, símbolos)
+  4. ? Cambiar contraseñas regularmente (cada 90 días recomendado)
+  5. ? Usar JWT SecretKey única para cada entorno
+  6. ? Habilitar stdoutLogEnabled solo temporalmente para debugging
+  7. ? Revisar logs regularmente y eliminar información sensible
+  
+  VALORES DE EJEMPLO PARA REEMPLAZAR:
+  
+  - TU_SERVIDOR_SQL: Ejemplos
+    * localhost\SQLEXPRESS
+    * 192.168.1.100
+    * sql.tudominio.com
+    * servidor-sql.local,1433
+  
+  - TU_CONTRASEÑA: 
+    * Mínimo 12 caracteres
+    * Incluir mayúsculas, minúsculas, números y símbolos
+    * Ejemplo (NO USAR): Ev3nt0s#ESCAT@2024$Secure!
+  
+  - GENERA_UNA_CLAVE_ALEATORIA...:
+    * Usar PowerShell para generar:
+      -join ((65..90) + (97..122) + (48..57) | Get-Random -Count 64 | ForEach-Object {[char]$_})
+    * Debe ser única y diferente para cada entorno
+  
+  ENTORNOS:
+  
+  - Production: Para producción (sin Swagger, sin detalles de errores)
+  - Staging: Para pruebas pre-producción
+  - Development: Para desarrollo (con Swagger, con detalles de errores)
+  
+  CONSULTA LA DOCUMENTACIÓN COMPLETA EN:
+  - DESPLIEGUE_IIS.md: Guía paso a paso de despliegue
+  - SEGURIDAD.md: Recomendaciones de seguridad
+  - README.md: Información general de la API
+-->

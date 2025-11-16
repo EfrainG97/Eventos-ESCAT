@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppRegistro.Pages.LoginPage"
+             Title="Iniciar Sesión"
+             BackgroundColor="White">
+
+    <Grid>
+        <!-- Fondo con gradiente sutil -->
+        <BoxView BackgroundColor="{StaticResource Secondary}" 
+                 Opacity="0.3" />
+        
+        <ScrollView>
+            <VerticalStackLayout
+                Padding="30,80,30,30"
+                Spacing="30"
+                VerticalOptions="Center">
+
+                <!-- Logo y Título -->
+                <VerticalStackLayout 
+                    Spacing="15"
+                    HorizontalOptions="Center"
+                    Margin="0,0,0,20">
+                    
+                    <!-- Logo ESCAT UNINTER (simulado con texto estilizado) -->
+                    <Border
+                        BackgroundColor="White"
+                        Stroke="{StaticResource Primary}"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 15"
+                        Padding="30,20"
+                        Shadow="{Shadow Brush=Black, Offset='5,5', Radius=10, Opacity=0.3}"
+                        HorizontalOptions="Center">
+                        <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                            <Image Source="escat.png"
+                                   Aspect="AspectFit"
+                                   WidthRequest="100"
+                                   HeightRequest="100"/>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <Label
+                        Text="Eventos ESCAT"
+                        FontSize="28"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource Primary}"
+                        HorizontalOptions="Center"
+                        Margin="0,10,0,0" />
+
+                    <Label
+                        Text="Sistema de Registro de Asistencia"
+                        FontSize="16"
+                        TextColor="{StaticResource Gray600}"
+                        HorizontalOptions="Center"
+                        Margin="0,-5,0,0" />
+                </VerticalStackLayout>
+
+                <!-- Contenedor del formulario -->
+                <Frame
+                    BackgroundColor="White"
+                    BorderColor="{StaticResource Primary}"
+                    CornerRadius="20"
+                    Padding="30"
+                    Margin="0,20,0,0"
+                    HasShadow="True">
+                    
+                    <VerticalStackLayout Spacing="25">
+
+                        <!-- Campo IP -->
+                        <VerticalStackLayout Spacing="8">
+                            <Label
+                                Text="IP del Servidor"
+                                FontSize="15"
+                                TextColor="{StaticResource Primary}"
+                                FontAttributes="Bold" />
+                            <Frame
+                                BackgroundColor="{StaticResource Secondary}"
+                                BorderColor="{StaticResource Primary}"
+                                CornerRadius="10"
+                                Padding="0"
+                                HasShadow="False">
+                                <Entry
+                                    x:Name="IpEntry"
+                                    Placeholder="Ej: 192.168.1.100"
+                                    Keyboard="Default"
+                                    TextColor="{StaticResource Gray900}"
+                                    PlaceholderColor="{StaticResource Gray500}"
+                                    BackgroundColor="Transparent"
+                                    Margin="15,0" />
+                            </Frame>
+                        </VerticalStackLayout>
+
+                        <!-- Campo Puerto -->
+                        <VerticalStackLayout Spacing="8">
+                            <Label
+                                Text="Puerto"
+                                FontSize="15"
+                                TextColor="{StaticResource Primary}"
+                                FontAttributes="Bold" />
+                            <Frame
+                                BackgroundColor="{StaticResource Secondary}"
+                                BorderColor="{StaticResource Primary}"
+                                CornerRadius="10"
+                                Padding="0"
+                                HasShadow="False">
+                                <Entry
+                                    x:Name="PortEntry"
+                                    Placeholder="Ej: 5129"
+                                    Keyboard="Numeric"
+                                    TextColor="{StaticResource Gray900}"
+                                    PlaceholderColor="{StaticResource Gray500}"
+                                    BackgroundColor="Transparent"
+                                    Margin="15,0" />
+                            </Frame>
+                        </VerticalStackLayout>
+
+                        <!-- Campo Usuario -->
+                        <VerticalStackLayout Spacing="8">
+                            <Label
+                                Text="Usuario"
+                                FontSize="15"
+                                TextColor="{StaticResource Primary}"
+                                FontAttributes="Bold" />
+                            <Frame
+                                BackgroundColor="{StaticResource Secondary}"
+                                BorderColor="{StaticResource Primary}"
+                                CornerRadius="10"
+                                Padding="0"
+                                HasShadow="False">
+                                <Entry
+                                    x:Name="UserEntry"
+                                    Placeholder="Ingresa tu usuario"
+                                    Keyboard="Default"
+                                    TextColor="{StaticResource Gray900}"
+                                    PlaceholderColor="{StaticResource Gray500}"
+                                    BackgroundColor="Transparent"
+                                    IsSpellCheckEnabled="False"
+                                    Margin="15,0" />
+                            </Frame>
+                        </VerticalStackLayout>
+
+                        <!-- Campo Contraseña -->
+                        <VerticalStackLayout Spacing="8">
+                            <Label
+                                Text="Contraseña"
+                                FontSize="15"
+                                TextColor="{StaticResource Primary}"
+                                FontAttributes="Bold" />
+                            <Frame
+                                BackgroundColor="{StaticResource Secondary}"
+                                BorderColor="{StaticResource Primary}"
+                                CornerRadius="10"
+                                Padding="0"
+                                HasShadow="False">
+                                <Entry
+                                    x:Name="PasswordEntry"
+                                    Placeholder="Ingresa tu contraseña"
+                                    IsPassword="True"
+                                    TextColor="{StaticResource Gray900}"
+                                    PlaceholderColor="{StaticResource Gray500}"
+                                    BackgroundColor="Transparent"
+                                    Margin="15,0" />
+                            </Frame>
+                        </VerticalStackLayout>
+
+                        <!-- Mensaje de error -->
+                        <Frame
+                            x:Name="ErrorMessageLabel"
+                            BackgroundColor="#FFE8E8"
+                            BorderColor="#FF6B6B"
+                            CornerRadius="8"
+                            Padding="15"
+                            IsVisible="False"
+                            Margin="0,5,0,0">
+                            <Label
+                                Text=""
+                                TextColor="#D32F2F"
+                                FontSize="13"
+                                x:Name="ErrorMessageText" />
+                        </Frame>
+
+                        <!-- Botón de Login -->
+                        <Button
+                            x:Name="LoginButton"
+                            Text="Iniciar Sesión"
+                            BackgroundColor="{StaticResource Primary}"
+                            TextColor="White"
+                            FontSize="17"
+                            FontAttributes="Bold"
+                            CornerRadius="12"
+                            HeightRequest="55"
+                            Margin="0,15,0,0"
+                            Clicked="OnLoginClicked" />
+
+                        <!-- Indicador de carga -->
+                        <ActivityIndicator
+                            x:Name="LoadingIndicator"
+                            IsRunning="False"
+                            IsVisible="False"
+                            Color="{StaticResource Primary}"
+                            Margin="0,10,0,0" />
+
+                    </VerticalStackLayout>
+                </Frame>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+
+</ContentPage>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
+             xmlns:camera="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
+             x:Class="AppRegistro.Pages.QRScannerPage"
+             Title="Escanear Código QR"
+             BackgroundColor="Black">
+
+    <Grid>
+        <camera:CameraBarcodeReaderView
+            x:Name="BarcodeReader"
+            BarcodesDetected="BarcodesDetected"
+            IsDetecting="True"
+            IsTorchOn="False" />
+
+        <Grid
+            RowDefinitions="*,Auto"
+            Padding="0">
+            
+            <!-- Overlay con marco para escanear -->
+            <Grid
+                RowDefinitions="*,Auto,*"
+                ColumnDefinitions="*,Auto,*"
+                VerticalOptions="Center"
+                HorizontalOptions="Center">
+                
+                <!-- Marco de escaneo -->
+                <Border
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    BackgroundColor="Transparent"
+                    Stroke="{StaticResource Primary}"
+                    StrokeThickness="4"
+                    StrokeShape="RoundRectangle 15,15,15,15"
+                    WidthRequest="280"
+                    HeightRequest="280">
+                    
+                    <!-- Esquinas decorativas -->
+                    <Grid>
+                        <!-- Esquina superior izquierda -->
+                        <BoxView
+                            BackgroundColor="{StaticResource Primary}"
+                            WidthRequest="30"
+                            HeightRequest="4"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Start"
+                            Margin="0,0,0,0" />
+                        <BoxView
+                            BackgroundColor="{StaticResource Primary}"
+                            WidthRequest="4"
+                            HeightRequest="30"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Start"
+                            Margin="0,0,0,0" />
+                        
+                        <!-- Esquina superior derecha -->
+                        <BoxView
+                            BackgroundColor="{StaticResource Primary}"
+                            WidthRequest="30"
+                            HeightRequest="4"
+                            HorizontalOptions="End"
+                            VerticalOptions="Start"
+                            Margin="0,0,0,0" />
+                        <BoxView
+                            BackgroundColor="{StaticResource Primary}"
+                            WidthRequest="4"
+                            HeightRequest="30"
+                            HorizontalOptions="End"
+                            VerticalOptions="Start"
+                            Margin="0,0,0,0" />
+                        
+                        <!-- Esquina inferior izquierda -->
+                        <BoxView
+                            BackgroundColor="{StaticResource Primary}"
+                            WidthRequest="30"
+                            HeightRequest="4"
+                            HorizontalOptions="Start"
+                            VerticalOptions="End"
+                            Margin="0,0,0,0" />
+                        <BoxView
+                            BackgroundColor="{StaticResource Primary}"
+                            WidthRequest="4"
+                            HeightRequest="30"
+                            HorizontalOptions="Start"
+                            VerticalOptions="End"
+                            Margin="0,0,0,0" />
+                        
+                        <!-- Esquina inferior derecha -->
+                        <BoxView
+                            BackgroundColor="{StaticResource Primary}"
+                            WidthRequest="30"
+                            HeightRequest="4"
+                            HorizontalOptions="End"
+                            VerticalOptions="End"
+                            Margin="0,0,0,0" />
+                        <BoxView
+                            BackgroundColor="{StaticResource Primary}"
+                            WidthRequest="4"
+                            HeightRequest="30"
+                            HorizontalOptions="End"
+                            VerticalOptions="End"
+                            Margin="0,0,0,0" />
+                    </Grid>
+                </Border>
+                
+                <!-- Overlay oscuro alrededor del marco -->
+                <BoxView
+                    Grid.Row="0"
+                    Grid.ColumnSpan="3"
+                    BackgroundColor="Black"
+                    Opacity="0.6" />
+                <BoxView
+                    Grid.Row="2"
+                    Grid.ColumnSpan="3"
+                    BackgroundColor="Black"
+                    Opacity="0.6" />
+                <BoxView
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    BackgroundColor="Black"
+                    Opacity="0.6" />
+                <BoxView
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    BackgroundColor="Black"
+                    Opacity="0.6" />
+            </Grid>
+
+            <!-- Instrucciones y controles -->
+            <Frame
+                Grid.Row="1"
+                BackgroundColor="{StaticResource Primary}"
+                CornerRadius="20,20,0,0"
+                Padding="25"
+                HasShadow="True">
+                <VerticalStackLayout Spacing="15">
+                    <Label
+                        Text="Apunta la cámara al código QR del alumno"
+                        FontSize="15"
+                        TextColor="White"
+                        Opacity="0.9"
+                        HorizontalOptions="Center"
+                        HorizontalTextAlignment="Center" />
+                    
+                    <Button
+                        Text="Cancelar"
+                        BackgroundColor="White"
+                        TextColor="{StaticResource Primary}"
+                        FontSize="16"
+                        FontAttributes="Bold"
+                        Clicked="CancelButton_Clicked"
+                        HeightRequest="50"
+                        CornerRadius="10" />
+                </VerticalStackLayout>
+            </Frame>
+        </Grid>
+    </Grid>
+</ContentPage>
