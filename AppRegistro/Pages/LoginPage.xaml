@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:AppRegistro.Converters"
              x:Class="AppRegistro.Pages.LoginPage"
-             Title="Iniciar Sesión"
+             Title="{Binding Title}"
              BackgroundColor="White">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <Grid>
         <!-- Fondo con gradiente sutil -->
@@ -81,6 +87,7 @@
                                 HasShadow="False">
                                 <Entry
                                     x:Name="IpEntry"
+                                    Text="{Binding Ip}"
                                     Placeholder="Ej: 192.168.1.100"
                                     Keyboard="Default"
                                     TextColor="{StaticResource Gray900}"
@@ -105,6 +112,7 @@
                                 HasShadow="False">
                                 <Entry
                                     x:Name="PortEntry"
+                                    Text="{Binding Port}"
                                     Placeholder="Ej: 5129"
                                     Keyboard="Numeric"
                                     TextColor="{StaticResource Gray900}"
@@ -129,6 +137,7 @@
                                 HasShadow="False">
                                 <Entry
                                     x:Name="UserEntry"
+                                    Text="{Binding User}"
                                     Placeholder="Ingresa tu usuario"
                                     Keyboard="Default"
                                     TextColor="{StaticResource Gray900}"
@@ -154,6 +163,7 @@
                                 HasShadow="False">
                                 <Entry
                                     x:Name="PasswordEntry"
+                                    Text="{Binding Password}"
                                     Placeholder="Ingresa tu contraseña"
                                     IsPassword="True"
                                     TextColor="{StaticResource Gray900}"
@@ -165,23 +175,20 @@
 
                         <!-- Mensaje de error -->
                         <Frame
-                            x:Name="ErrorMessageLabel"
                             BackgroundColor="#FFE8E8"
                             BorderColor="#FF6B6B"
                             CornerRadius="8"
                             Padding="15"
-                            IsVisible="False"
+                            IsVisible="{Binding IsErrorMessageVisible}"
                             Margin="0,5,0,0">
                             <Label
-                                Text=""
+                                Text="{Binding ErrorMessage}"
                                 TextColor="#D32F2F"
-                                FontSize="13"
-                                x:Name="ErrorMessageText" />
+                                FontSize="13" />
                         </Frame>
 
                         <!-- Botón de Login -->
                         <Button
-                            x:Name="LoginButton"
                             Text="Iniciar Sesión"
                             BackgroundColor="{StaticResource Primary}"
                             TextColor="White"
@@ -190,13 +197,13 @@
                             CornerRadius="12"
                             HeightRequest="55"
                             Margin="0,15,0,0"
-                            Clicked="OnLoginClicked" />
+                            Command="{Binding LoginCommand}"
+                            IsEnabled="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}" />
 
                         <!-- Indicador de carga -->
                         <ActivityIndicator
-                            x:Name="LoadingIndicator"
-                            IsRunning="False"
-                            IsVisible="False"
+                            IsRunning="{Binding IsLoading}"
+                            IsVisible="{Binding IsLoading}"
                             Color="{StaticResource Primary}"
                             Margin="0,10,0,0" />
 

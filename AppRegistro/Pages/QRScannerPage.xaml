@@ -11,7 +11,7 @@
         <camera:CameraBarcodeReaderView
             x:Name="BarcodeReader"
             BarcodesDetected="BarcodesDetected"
-            IsDetecting="True"
+            IsDetecting="{Binding IsDetecting}"
             IsTorchOn="False" />
 
         <Grid
@@ -149,7 +149,7 @@
                         TextColor="{StaticResource Primary}"
                         FontSize="16"
                         FontAttributes="Bold"
-                        Clicked="CancelButton_Clicked"
+                        Command="{Binding CancelCommand}"
                         HeightRequest="50"
                         CornerRadius="10" />
                 </VerticalStackLayout>

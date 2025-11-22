@@ -1,27 +1,43 @@
 using ZXing.Net.Maui;
 using ZXing.Net.Maui.Controls;
+using AppRegistro.ViewModels;
 
 namespace AppRegistro.Pages
 {
     public partial class QRScannerPage : ContentPage
     {
-        private readonly AppRegistro.MainPage _mainPage;
+        public QRScannerPageViewModel ViewModel { get; }
+        private readonly MainPageViewModel? _mainPageViewModel;
 
-        public QRScannerPage(AppRegistro.MainPage mainPage)
+        public QRScannerPage(QRScannerPageViewModel viewModel)
         {
             InitializeComponent();
-            _mainPage = mainPage;
+            ViewModel = viewModel;
+            BindingContext = ViewModel;
+
+            // Suscribirse a eventos
+            ViewModel.QRCodeDetected += OnQRCodeDetected;
+            ViewModel.CancelScanning += OnCancelScanning;
+            ViewModel.InvalidQRCodeDetected += OnInvalidQRCodeDetected;
+        }
+
+        public QRScannerPage(MainPageViewModel mainPageViewModel) 
+            : this(new QRScannerPageViewModel())
+        {
+            _mainPageViewModel = mainPageViewModel;
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
+            ViewModel.IsDetecting = true;
             BarcodeReader.IsDetecting = true;
         }
 
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
+            ViewModel.IsDetecting = false;
             BarcodeReader.IsDetecting = false;
         }
 
@@ -32,33 +48,29 @@ namespace AppRegistro.Pages
                 var barcode = e.Results.First();
                 var qrValue = barcode.Value;
 
-                // Intentar parsear el valor del QR como identificador
-                if (int.TryParse(qrValue, out int identificador))
-                {
-                    // Detener el escaneo
-                    BarcodeReader.IsDetecting = false;
-
-                    // Volver a MainPage y consultar el identificador
-                    MainThread.BeginInvokeOnMainThread(async () =>
-                    {
-                        await Navigation.PopAsync();
-                        _mainPage.ConsultarQR(identificador);
-                    });
-                }
-                else
-                {
-                    // Si no es un número válido, mostrar error
-                    MainThread.BeginInvokeOnMainThread(async () =>
-                    {
-                        await DisplayAlert("Error", "El código QR no contiene un identificador válido", "Ok");
-                    });
-                }
+                // Notificar al ViewModel
+                ViewModel.OnBarcodeDetected(qrValue);
             }
         }
 
-        private async void CancelButton_Clicked(object? sender, EventArgs e)
+        private async void OnQRCodeDetected(object? sender, int identificador)
         {
-            BarcodeReader.IsDetecting = false;
+            // Volver a MainPage y consultar el identificador
+            await Navigation.PopAsync();
+            
+            if (_mainPageViewModel != null)
+            {
+                await _mainPageViewModel.ConsultarPorIdentificadorAsync(identificador);
+            }
+        }
+
+        private async void OnInvalidQRCodeDetected(object? sender, EventArgs e)
+        {
+            await DisplayAlert("Error", "El código QR no contiene un identificador válido", "Ok");
+        }
+
+        private async void OnCancelScanning(object? sender, EventArgs e)
+        {
             await Navigation.PopAsync();
         }
     }

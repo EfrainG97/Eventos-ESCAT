@@ -16,11 +16,7 @@ namespace AppRegistro
         protected override Window CreateWindow(IActivationState? activationState)
         {
             // Obtener LoginPage del contenedor de servicios
-            var loginPage = _serviceProvider.GetService<LoginPage>() 
-                ?? new LoginPage(
-                    _serviceProvider.GetRequiredService<Services.IApiService>(),
-                    _serviceProvider.GetRequiredService<Services.ISecureStorageService>()
-                );
+            var loginPage = _serviceProvider.GetRequiredService<LoginPage>();
             
             return new Window(loginPage);
         }
